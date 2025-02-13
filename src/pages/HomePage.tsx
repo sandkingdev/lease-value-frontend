@@ -4,17 +4,24 @@ import { useAllContext } from "../context/AllContext";
 
 const HomePage = () => {
   const { session } = useAllContext();
+
+  const handleSignOut = () => {
+    console.log("session: ", session);
+
+    supabase.auth.signOut();
+  }
+
   return (
-    <main>
-      <section className="main-container">
+    <main className="mx-2 md:mx-10">
+      <section className="main-container p-4 lg:p-8">
         <h1 className="header-text">Valuation Model</h1>
         <p>Current User : {session?.user.email || "None"}</p>
         {session ? (
-          <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+          <button onClick={() => handleSignOut()}>Sign Out</button>
         ) : (
           <Link to="/auth/sign-in">Sign In</Link>
         )}
-        <Link to="/report">Report Page 🛡️</Link>
+        <Link to="/report">Report Page</Link>
       </section>
     </main>
   );

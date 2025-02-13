@@ -32,13 +32,13 @@ const InputComponent = () => {
     const [startDate, setStartDate] = useState<string>();
 
     useEffect(() => {
-        if (endDate) setLeaseEndDate(new Date(endDate));
-        if (startDate) setValuationDate(new Date(startDate));
+        window.alert(endDate);
+        if (endDate) setLeaseEndDate((new Date(`${endDate}T12:00:00`)));
+        if (startDate) setValuationDate((new Date(`${startDate}T12:00:00`)));
     }, [
         endDate,
         startDate,
     ]);
-
 
     const handleFloorLevel = (event: any) => {
         setSelectedFloorLevelOption(event.target.value);
@@ -49,11 +49,11 @@ const InputComponent = () => {
     };
 
     return (
-        <div className="flex w-full border border-1 border-light-green p-5">
+        <div className="flex w-full border border-1 border-light-green p-3 md:p-5">
             <div className="flex">
-                <div className="flex flex-col gap-y-2">
+                <div className="flex flex-col gap-y-2 text-sm md:text-base">
                     <div className="lease-end-date flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Lease End Date:
                         </div>
                         <div className="">
@@ -61,13 +61,14 @@ const InputComponent = () => {
                                 className={`flex rounded-lg border w-full text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0`}
                                 type='date'
                                 value={endDate}
+                                defaultValue={'2108-12-24'}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
                     </div>
 
                     <div className="lease-start-date flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Valuation Date:
                         </div>
                         <div className="">
@@ -75,13 +76,14 @@ const InputComponent = () => {
                                 className={`flex rounded-lg border w-full text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0`}
                                 type='date'
                                 value={startDate}
+                                defaultValue={'2033-03-01'}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
                         </div>
                     </div>
 
                     <div className="number-of-bedrooms flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Number of Bedrooms:
                         </div>
                         <div className="">
@@ -95,7 +97,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="floor-level flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Floor Level:
                         </div>
                         <div className="">
@@ -118,7 +120,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="features flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Features:
                         </div>
                         <div className="">
@@ -141,7 +143,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="ground-rent flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Ground Rent (pa):
                         </div>
                         <div className="">
@@ -155,7 +157,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="long-lease-value-of-the-flat flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Long Lease Value of the Flat:
                         </div>
                         <div className="">
@@ -169,7 +171,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="long-lease-value-of-the-flat flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Deferment Rate %:
                         </div>
                         <div className="">
@@ -189,7 +191,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="long-lease-value-of-the-flat flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Capitalisation Rate %:
                         </div>
                         <div className="">
@@ -209,7 +211,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="long-lease-value-of-the-flat flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Low Rate %:
                         </div>
                         <div className="">
@@ -229,7 +231,7 @@ const InputComponent = () => {
                     </div>
 
                     <div className="long-lease-value-of-the-flat flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             High Rate %:
                         </div>
                         <div className="">
@@ -250,14 +252,15 @@ const InputComponent = () => {
                     </div>
 
                     <div className="address flex gap-x-4 items-center">
-                        <div className="font-bold text-base">
+                        <div className="font-bold ">
                             Address:
                         </div>
                         <div className="">
                             <input
-                                className={`flex rounded-lg border w-full text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0`}
+                                className={`flex rounded-lg border text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0 w-full sm:w-[300px]`}
                                 type='text'
                                 value={address}
+                                placeholder={'9 Cranbourne Court, Stevenage, SG1 4RE'}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </div>

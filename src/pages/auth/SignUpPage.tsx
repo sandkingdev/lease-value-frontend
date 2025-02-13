@@ -36,11 +36,11 @@ const SignUpPage = () => {
   };
 
   return (
-    <main>
+    <main className="mx-3 md:mx-10">
       <Link className="home-link" to="/">
         ◄ Home
       </Link>
-      <form className="main-container" onSubmit={handleSubmit}>
+      <form className="main-container p-4 lg:p-8" onSubmit={handleSubmit}>
         <h1 className="header-text">Sign Up</h1>
         <p
           style={{

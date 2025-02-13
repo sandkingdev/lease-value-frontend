@@ -5,10 +5,10 @@ import { Session } from "@supabase/supabase-js";
 
 interface AllContextType {
   session: Session | null,
-  leaseEndDate: Date | undefined,
-  setLeaseEndDate: (leaseEndDate: Date | undefined) => void,
-  valuationDate: Date | undefined,
-  setValuationDate: (valuationDate: Date | undefined) => void,
+  leaseEndDate: Date,
+  setLeaseEndDate: (leaseEndDate: Date) => void,
+  valuationDate: Date,
+  setValuationDate: (valuationDate: Date) => void,
   numberOfBedrooms: number,
   setNumberOfBedrooms: (numberOfBedrooms: number) => void,
   selectedFloorLevelOption: any;
@@ -48,8 +48,8 @@ export const AllContextProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   // state variables
-  const [leaseEndDate, setLeaseEndDate] = useState<Date>();
-  const [valuationDate, setValuationDate] = useState<Date>();
+  const [leaseEndDate, setLeaseEndDate] = useState<Date>(new Date("2108-12-24T20:00:00"));
+  const [valuationDate, setValuationDate] = useState<Date>(new Date("2033-03-01T20:00:00"));
   const [numberOfBedrooms, setNumberOfBedrooms] = useState<number>(2);
   const [selectedFloorLevelOption, setSelectedFloorLevelOption] = useState("basement");
   const [selectedFeaturesOption, setSelectedFeaturesOption] = useState("no garden");

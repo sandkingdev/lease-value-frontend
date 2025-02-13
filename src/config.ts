@@ -38,3 +38,43 @@ export const featuresOptions: FeaturesOption[] = [
   { value: "a garage", label: "Garage" },
   { value: "a garden and off road parking", label: "A Garden and Off Road Parking" },
 ];
+
+export const getRemainingYears = (startDate: Date, endDate: Date) => {
+  try {
+    if (endDate <= startDate) {
+      return 0;
+    }
+    const timeDiff = endDate.getTime() - startDate.getTime();
+    const durationInYears = timeDiff / (1000 * 60 * 60 * 24 * 365.25);
+
+    return durationInYears;
+  } catch (error) {
+    console.error("Error parsing date:", error);
+    return 0;
+  }
+}
+
+export const getStringOfRemainingYears = (startDate: Date, endDate: Date) => {
+  if (!endDate) return {
+    status: false,
+    result: 'You should select lease end date at first'
+  };
+  if (!startDate) return {
+    status: false,
+    result: 'You should select valuation date at first'
+  };
+
+  const numberOfYearsRemainingVal = getRemainingYears(startDate, endDate);
+
+  if (numberOfYearsRemainingVal <= 0) {
+    return {
+      status: false,
+      result: 'Error in parsing date'
+    }
+  } else {
+    return {
+      status: true,
+      result: `Years remaining on your lease: ${numberOfYearsRemainingVal.toFixed(2)}`
+    }
+  }
+}
