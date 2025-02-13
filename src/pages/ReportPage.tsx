@@ -3,15 +3,15 @@ import InputComponent from "../components/InputComponent";
 
 const ReportPage = () => {
   return (
-    <main>
+    <main className="mx-10">
       <Link className="home-link" to="/">
         ◄ Home
       </Link>
-      <section className="main-container">
-        <h1 className="header-text">This is a Report Page</h1>
+      <div className="main-container gap-y-5">
+        <h1 className="header-text text-4xl">This is a Report Page</h1>
 
         <InputComponent />
-      </section>
+      </div>
     </main>
   );
 };
