@@ -32,7 +32,6 @@ const InputComponent = () => {
     const [startDate, setStartDate] = useState<string>();
 
     useEffect(() => {
-        window.alert(endDate);
         if (endDate) setLeaseEndDate((new Date(`${endDate}T12:00:00`)));
         if (startDate) setValuationDate((new Date(`${startDate}T12:00:00`)));
     }, [

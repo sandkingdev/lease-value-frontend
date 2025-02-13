@@ -146,3 +146,10 @@ export const levels = {
   medium: 1,
   high: 0.99,
 }
+
+export const premiumCalculationYears = [
+  1,
+  2,
+  5,
+  10,
+];
