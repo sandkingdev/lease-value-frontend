@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import NotFoundPage from "../pages/404Page";
-import { useSession } from "../context/SessionContext";
+import { useAllContext } from "../context/AllContext";
 
 const AuthProtectedRoute = () => {
-  const { session } = useSession();
+  const { session } = useAllContext();
   if (!session) {
     // or you can redirect to a different page and show a message
     return <NotFoundPage />;

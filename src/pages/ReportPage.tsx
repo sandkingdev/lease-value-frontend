@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { useSession } from "../context/SessionContext";
+import InputComponent from "../components/InputComponent";
 
 const ReportPage = () => {
-  const { session } = useSession();
   return (
     <main>
       <Link className="home-link" to="/">
@@ -10,7 +9,8 @@ const ReportPage = () => {
       </Link>
       <section className="main-container">
         <h1 className="header-text">This is a Report Page</h1>
-        <p>Current User : {session?.user.email || "None"}</p>
+
+        <InputComponent />
       </section>
     </main>
   );

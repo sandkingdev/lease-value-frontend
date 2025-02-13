@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { SessionProvider } from "./context/SessionContext";
+import { AllContextProvider } from "./context/AllContext";
 
 const Providers = () => {
   return (
-    <SessionProvider>
+    <AllContextProvider>
       <Outlet />
-    </SessionProvider>
+    </AllContextProvider>
   );
 };
 

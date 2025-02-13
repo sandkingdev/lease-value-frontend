@@ -21,6 +21,6 @@ VITE_SUPABASE_ANON_KEY=
 ## What you need to know
 
 - `/router/index.tsx` is where you declare your routes
-- `/context/SessionContext.tsx` is where you can find the `useSession` hook
+- `/context/AllContext.tsx` is where you can find the `useAllContext` hook
   - This hook gives you access to the `session` object from Supabase globally
 - `/Providers.tsx` is where you can add more `providers` or `wrappers`

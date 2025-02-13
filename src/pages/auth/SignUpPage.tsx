@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useSession } from "../../context/SessionContext";
+import { useAllContext } from "../../context/AllContext";
 import supabase from "../../supabase";
 
 const SignUpPage = () => {
   // ==============================
   // If user is already logged in, redirect to home
   // This logic is being repeated in SignIn and SignUp..
-  const { session } = useSession();
+  const { session } = useAllContext();
   if (session) return <Navigate to="/" />;
   // maybe we can create a wrapper component for these pages
   // just like the ./router/AuthProtectedRoute.tsx? up to you.

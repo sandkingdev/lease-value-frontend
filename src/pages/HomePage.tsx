@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import supabase from "../supabase";
-import { useSession } from "../context/SessionContext";
+import { useAllContext } from "../context/AllContext";
 
 const HomePage = () => {
-  const { session } = useSession();
+  const { session } = useAllContext();
   return (
     <main>
       <section className="main-container">
