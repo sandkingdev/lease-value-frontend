@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AllContext";
 import { featuresOptions, floorLevelOptions } from "../../config";
-import { FeaturesOption, FloorLevelOptionType } from "../../types";
+import { FeaturesOptionType, FloorLevelOptionType } from "../../types";
 
 const InputComponent = () => {
     const {
@@ -132,7 +132,7 @@ const InputComponent = () => {
                                 >
                                     <option value="" disabled>Select an option</option>
                                     {
-                                        featuresOptions.map((item: FeaturesOption, index: number) => (
+                                        featuresOptions.map((item: FeaturesOptionType, index: number) => (
                                             <option value={item.value} key={index}>{item.label}</option>
                                         ))
                                     }

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../supabase";
 import LoadingPage from "../pages/LoadingPage";
 import { Session } from "@supabase/supabase-js";
+import { getRemainingYears } from "../config";
 
 interface AllContextType {
   session: Session | null,
@@ -9,6 +10,7 @@ interface AllContextType {
   setLeaseEndDate: (leaseEndDate: Date) => void,
   valuationDate: Date,
   setValuationDate: (valuationDate: Date) => void,
+  durationYears: number,
   numberOfBedrooms: number,
   setNumberOfBedrooms: (numberOfBedrooms: number) => void,
   selectedFloorLevelOption: any;
@@ -50,6 +52,7 @@ export const AllContextProvider = ({ children }: Props) => {
   // state variables
   const [leaseEndDate, setLeaseEndDate] = useState<Date>(new Date("2108-12-24T20:00:00"));
   const [valuationDate, setValuationDate] = useState<Date>(new Date("2033-03-01T20:00:00"));
+  const [durationYears, setDurationYears] = useState<number>(getRemainingYears(valuationDate, leaseEndDate));
   const [numberOfBedrooms, setNumberOfBedrooms] = useState<number>(2);
   const [selectedFloorLevelOption, setSelectedFloorLevelOption] = useState("basement");
   const [selectedFeaturesOption, setSelectedFeaturesOption] = useState("no garden");
@@ -75,20 +78,7 @@ export const AllContextProvider = ({ children }: Props) => {
   }, [supabase]);
 
   useEffect(() => {
-    console.log({
-      leaseEndDate,
-      valuationDate,
-      numberOfBedrooms,
-      selectedFloorLevelOption,
-      selectedFeaturesOption,
-      groundRent,
-      longLeaseValueOfTheFlat,
-      defermentRate,
-      capitalisationRate,
-      lowRate,
-      highRate,
-      address,
-    });
+    setDurationYears(getRemainingYears(valuationDate, leaseEndDate));
   }, [
     leaseEndDate,
     valuationDate,
@@ -112,6 +102,7 @@ export const AllContextProvider = ({ children }: Props) => {
         setLeaseEndDate,
         valuationDate,
         setValuationDate,
+        durationYears,
         numberOfBedrooms,
         setNumberOfBedrooms,
         selectedFloorLevelOption,

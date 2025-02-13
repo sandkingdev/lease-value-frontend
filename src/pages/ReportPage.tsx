@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import InputComponent from "../components/InputComponent";
 import LeaseExtensionValuation from "../components/LeaseExtensionValuation";
+import SummaryofResults from "../components/SummaryofResults";
 
 const ReportPage = () => {
   return (
@@ -14,6 +15,8 @@ const ReportPage = () => {
         <InputComponent />
 
         <LeaseExtensionValuation />
+
+        <SummaryofResults />
       </div>
     </main>
   );

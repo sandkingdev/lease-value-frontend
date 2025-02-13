@@ -4,7 +4,13 @@ export type FloorLevelOptionType = {
   label: string,
 };
 
-export type FeaturesOption = {
+export type FeaturesOptionType = {
   value: string,
   label: string,
+};
+
+export type PremiumType = {
+  lostRent: number,
+  landlordValue: number,
+  marriageValue: number,
 };

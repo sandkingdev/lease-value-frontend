@@ -1,4 +1,4 @@
-import { FeaturesOption, FloorLevelOptionType } from "./types";
+import { FeaturesOptionType, FloorLevelOptionType, PremiumType } from "./types";
 
 if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
   alert("VITE_SUPABASE_ANON_KEY is required");
@@ -29,7 +29,7 @@ export const floorLevelOptions: FloorLevelOptionType[] = [
 ];
 
 
-export const featuresOptions: FeaturesOption[] = [
+export const featuresOptions: FeaturesOptionType[] = [
   { value: "no garden", label: "No Garden" },
   { value: "a private garden", label: "Private Garden" },
   { value: "a communal garden", label: "Communal Garden" },
@@ -77,4 +77,72 @@ export const getStringOfRemainingYears = (startDate: Date, endDate: Date) => {
       result: `Years remaining on your lease: ${numberOfYearsRemainingVal.toFixed(2)}`
     }
   }
+}
+
+export const calculatePremium = (years: number, groundRent: number, propertyValue: number, yieldRate: number, defermentRate: number, level: number) => {
+  // Lost Rent
+  const lostRent = ((1 - (1 / Math.pow(1 + yieldRate / 100, years))) / (yieldRate / 100)) * groundRent;
+
+  // Remainder Term
+  const remainderTerm = propertyValue / Math.pow(1 + defermentRate / 100, years);
+  const remainderNinetyTerm = propertyValue / Math.pow(1 + defermentRate / 100, years + 90);
+  const landlordValue = remainderTerm - remainderNinetyTerm;
+
+  // Land Current Interest
+  const landCurrentInterest = lostRent + remainderTerm;
+
+  // Hypothetical logic from your code
+  let talentedCurrentInterest;
+  if (years > 95) {
+    talentedCurrentInterest = propertyValue * 0.972;
+  } else {
+    talentedCurrentInterest = (
+      (0.106 + 0.894 * (1 - Math.pow(0.972, years))) -
+      ((-0.002 * years) + 0.1706)
+    ) * propertyValue * level;
+  }
+
+  const beforeMarriageValue = landCurrentInterest + talentedCurrentInterest;
+  const landTotal = propertyValue + remainderNinetyTerm;
+  const difference = landTotal - beforeMarriageValue;
+  const marriageValue = years > 80 ? 0 : difference / 2;
+
+  // Premium
+  const premium = {
+    lostRent,
+    landlordValue,
+    marriageValue,
+  };
+
+  return premium;
+}
+
+export const getPremiumValue = (premium: PremiumType) => {
+  const {
+    lostRent,
+    landlordValue,
+    marriageValue,
+  } = premium;
+
+  return lostRent + landlordValue + marriageValue;
+}
+
+export const formatAndRoundToTens = (numString: string) => {
+  // Remove commas
+  let raw = numString.replace(/,/g, '');
+  // Parse number
+  let num = parseFloat(raw);
+  if (isNaN(num)) return numString; // fallback
+
+  // Round to nearest tens
+  num = Math.round(num / 10) * 10;
+
+  // Re-apply commas
+  return num.toLocaleString('en-GB');
+}
+
+export const levels = {
+  low: 1.01,
+  medium: 1,
+  high: 0.99,
 }
