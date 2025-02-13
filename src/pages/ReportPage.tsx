@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import InputComponent from "../components/InputComponent";
 import LeaseExtensionValuation from "../components/LeaseExtensionValuation";
 import SummaryofResults from "../components/SummaryofResults";
+import PropertyParticulars from "../components/PropertyParticulars";
 
 const ReportPage = () => {
   return (
@@ -17,6 +18,8 @@ const ReportPage = () => {
         <LeaseExtensionValuation />
 
         <SummaryofResults />
+
+        <PropertyParticulars />
       </div>
     </main>
   );
