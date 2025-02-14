@@ -3,6 +3,8 @@ import { useAllContext } from "../../context/AllContext";
 const PropertyParticulars = () => {
     const {
         numberOfBedrooms,
+        selectedFloorLevelOption,
+        selectedFeaturesOption,
     } = useAllContext();
 
     return (
@@ -13,7 +15,7 @@ const PropertyParticulars = () => {
 
             <div className="flex flex-col content text-sm md:text-base gap-y-4">
                 <div>
-                    The property is a {numberOfBedrooms} bedroom flat, located on the basement floor. The property has no garden.
+                    The property is a {numberOfBedrooms} bedroom flat, located on the {selectedFloorLevelOption} floor. The property has {selectedFeaturesOption}.
                 </div>
 
                 <div className="title text-title-color text-2xl md:text-3xl my-6 font-bold">

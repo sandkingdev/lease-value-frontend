@@ -4,6 +4,7 @@ import LeaseExtensionValuation from "../components/LeaseExtensionValuation";
 import SummaryofResults from "../components/SummaryofResults";
 import PropertyParticulars from "../components/PropertyParticulars";
 import PremiumCalculation from "../components/PremiumCalculation";
+import Calculations from "../components/Calculations";
 
 const ReportPage = () => {
   return (
@@ -23,6 +24,8 @@ const ReportPage = () => {
         <PropertyParticulars />
 
         <PremiumCalculation />
+
+        <Calculations />
       </div>
     </main>
   );

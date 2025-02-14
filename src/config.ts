@@ -153,3 +153,62 @@ export const premiumCalculationYears = [
   5,
   10,
 ];
+
+export const getRelativityRate = async (durationInYears: number) => {
+  if (durationInYears >= 80) {
+    return {
+      status: false,
+      result: "Not applicable / No marriage value",
+      value: 0,
+    };
+  }
+
+  try {
+    // Load CSV
+    // @ts-ignore
+    const d3 = window.d3;
+    const data = await d3.csv("../public/relativity.csv");
+
+    console.log("CSV Data: ", data);
+
+    // Parse terms from data
+    const terms = data.map((d: any) => parseFloat(d.Term));
+
+    // Find lower and upper bounding rows
+    const lower = Math.max(...terms.filter((item: any) => item <= durationInYears));
+    const upper = Math.min(...terms.filter((item: any) => item >= durationInYears));
+
+    const lowerRow = data.find((row: any) => parseFloat(row.Term) === lower);
+    const upperRow = data.find((row: any) => parseFloat(row.Term) === upper);
+
+    let relativityRate;
+    if (lowerRow && upperRow && lower !== upper) {
+      // Interpolate
+      const ratio = (durationInYears - lower) / (upper - lower);
+      const lowerRel = parseFloat(lowerRow.Relativity);
+      const upperRel = parseFloat(upperRow.Relativity);
+      relativityRate = lowerRel + ratio * (upperRel - lowerRel);
+    } else if (lowerRow) {
+      // Exact match
+      relativityRate = parseFloat(lowerRow.Relativity);
+    } else {
+      relativityRate = 0;
+    }
+
+    const result = {
+      status: true,
+      result: `Relativity Rate: ${relativityRate.toFixed(2)}% (${durationInYears.toFixed(2)} yrs)`,
+      value: relativityRate,
+    };
+
+    return result; // ✅ This properly returns the value
+
+  } catch (error) {
+    console.error("CSV load error:", error);
+    return {
+      status: false,
+      result: "There was an error in loading csv",
+      value: 0,
+    };
+  }
+};

@@ -14,3 +14,9 @@ export type PremiumType = {
   landlordValue: number,
   marriageValue: number,
 };
+
+export type RelativityRateType = {
+  status: boolean,
+  result: string,
+  value: number,
+};
