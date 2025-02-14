@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { getRelativityRate, } from "../../config";
 import { useAllContext } from "../../context/AllContext";
-import { RelativityRateType } from "../../types";
 
 const Abstract = () => {
     const {
@@ -10,15 +7,8 @@ const Abstract = () => {
         groundRent,
         longLeaseValueOfTheFlat,
         defermentRate,
+        relativityRate,
     } = useAllContext();
-    const [relativityRate, setRelativityRate] = useState<RelativityRateType>();
-
-    useEffect(() => {
-        (async () => {
-            const newRelativityRate = await getRelativityRate(durationYears);
-            setRelativityRate(newRelativityRate);
-        })()
-    }, [durationYears]);
 
     return (
         <div className="flex flex-col content text-sm md:text-base gap-y-2">

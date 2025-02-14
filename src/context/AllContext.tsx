@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../supabase";
 import LoadingPage from "../pages/LoadingPage";
 import { Session } from "@supabase/supabase-js";
-import { getRemainingYears } from "../config";
+import { getRelativityRate, getRemainingYears } from "../config";
+import { RelativityRateType } from "../types";
 
 interface AllContextType {
   session: Session | null,
@@ -11,6 +12,7 @@ interface AllContextType {
   valuationDate: Date,
   setValuationDate: (valuationDate: Date) => void,
   durationYears: number,
+  relativityRate: RelativityRateType,
   numberOfBedrooms: number,
   setNumberOfBedrooms: (numberOfBedrooms: number) => void,
   selectedFloorLevelOption: any;
@@ -63,6 +65,11 @@ export const AllContextProvider = ({ children }: Props) => {
   const [lowRate, setLowRate] = useState<number>(7);
   const [highRate, setHighRate] = useState<number>(6);
   const [address, setAddress] = useState<string>('');
+  const [relativityRate, setRelativityRate] = useState<RelativityRateType>({
+    status: false,
+    result: "Not applicable / No marriage value",
+    value: 0,
+  });
 
   useEffect(() => {
     const authStateListener = supabase.auth.onAuthStateChange(
@@ -94,6 +101,13 @@ export const AllContextProvider = ({ children }: Props) => {
     address,
   ]);
 
+  useEffect(() => {
+    (async () => {
+      const newRelativityRate = await getRelativityRate(durationYears);
+      setRelativityRate(newRelativityRate);
+    })()
+  }, [durationYears]);
+
   return (
     <AllContext.Provider
       value={{
@@ -103,6 +117,7 @@ export const AllContextProvider = ({ children }: Props) => {
         valuationDate,
         setValuationDate,
         durationYears,
+        relativityRate,
         numberOfBedrooms,
         setNumberOfBedrooms,
         selectedFloorLevelOption,

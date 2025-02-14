@@ -169,7 +169,7 @@ export const getRelativityRate = async (durationInYears: number) => {
     // Load CSV
     // @ts-ignore
     const d3 = window.d3;
-    const data = await d3.csv("../public/relativity.csv");
+    const data = await d3.csv("/relativity.csv");
 
     // Parse terms from data
     const terms = data.map((d: any) => parseFloat(d.Term));

@@ -1,6 +1,7 @@
 import Abstract from "./Abstract";
 import CapitalisationLossOfGroundRent from "./CapitalisationLossOfGroundRent";
 import LossOfFreeholdReversion from "./LossOfFreeholdReversion";
+import MarriageValue from "./MarriageValue";
 
 const Calculations = () => {
 
@@ -15,6 +16,8 @@ const Calculations = () => {
             <CapitalisationLossOfGroundRent />
 
             <LossOfFreeholdReversion />
+
+            <MarriageValue />
         </div>
     )
 };
