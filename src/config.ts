@@ -39,6 +39,8 @@ export const featuresOptions: FeaturesOptionType[] = [
   { value: "a garden and off road parking", label: "A Garden and Off Road Parking" },
 ];
 
+export const extensionYears = 90;
+
 export const getRemainingYears = (startDate: Date, endDate: Date) => {
   try {
     if (endDate <= startDate) {
@@ -168,8 +170,6 @@ export const getRelativityRate = async (durationInYears: number) => {
     // @ts-ignore
     const d3 = window.d3;
     const data = await d3.csv("../public/relativity.csv");
-
-    console.log("CSV Data: ", data);
 
     // Parse terms from data
     const terms = data.map((d: any) => parseFloat(d.Term));

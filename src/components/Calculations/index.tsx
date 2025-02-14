@@ -1,4 +1,6 @@
 import Abstract from "./Abstract";
+import CapitalisationLossOfGroundRent from "./CapitalisationLossOfGroundRent";
+import LossOfFreeholdReversion from "./LossOfFreeholdReversion";
 
 const Calculations = () => {
 
@@ -9,6 +11,10 @@ const Calculations = () => {
             </div>
 
             <Abstract />
+
+            <CapitalisationLossOfGroundRent />
+
+            <LossOfFreeholdReversion />
         </div>
     )
 };
