@@ -19,8 +19,8 @@ const InputComponent = () => {
         setLongLeaseValueOfTheFlat,
         defermentRate,
         setDefermentRate,
-        capitalisationRate,
-        setCapitalisationRate,
+        midRate,
+        setMidRate,
         lowRate,
         setLowRate,
         highRate,
@@ -197,12 +197,12 @@ const InputComponent = () => {
                             <input
                                 className={`flex rounded-lg border w-full text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0`}
                                 type='number'
-                                value={capitalisationRate}
+                                value={midRate}
                                 onChange={(eV) => {
                                     const value = eV.target.value;
 
                                     if (value === '' || /^\d+(\.\d{0,2})?$/.test(value)) {
-                                        setCapitalisationRate(parseFloat(value));
+                                        setMidRate(parseFloat(value));
                                     }
                                 }}
                             />

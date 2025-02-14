@@ -4,7 +4,6 @@ import { extensionYears } from "../../config";
 
 const LossOfFreeholdReversion = () => {
     const {
-        capitalisationRate,
         durationYears,
         defermentRate,
         longLeaseValueOfTheFlat,
@@ -19,7 +18,10 @@ const LossOfFreeholdReversion = () => {
         const extendedDurationYears = durationYears + 90;
         const newFutureValue = 1 / Math.pow(1 + defermentRate / 100, extendedDurationYears);
         setFutureValue(newFutureValue);
-    }, [capitalisationRate, durationYears]);
+    }, [
+        durationYears,
+        defermentRate,
+    ]);
 
     return (
         <div className="flex flex-col content text-sm md:text-base gap-y-2 mt-10">

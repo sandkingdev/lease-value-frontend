@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AllContext";
 
-const CapitalisationLossOfGroundRent = () => {
+const CapitalisationLossOfGroundRent = ({
+    capitalisationRate
+}: {
+    capitalisationRate: number
+}) => {
     const {
-        capitalisationRate,
         durationYears,
         groundRent,
     } = useAllContext();
@@ -13,7 +16,10 @@ const CapitalisationLossOfGroundRent = () => {
         const capRate = capitalisationRate / 100;
         const newYearsPurchase = ((1 - (1 / Math.pow(1 + capRate, durationYears))) / capRate);
         setYearsPurchase(newYearsPurchase);
-    }, [capitalisationRate, durationYears]);
+    }, [
+        capitalisationRate,
+        durationYears,
+    ]);
 
     return (
         <div className="flex flex-col content text-sm md:text-base gap-y-2 mt-10">

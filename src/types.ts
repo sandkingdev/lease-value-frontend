@@ -20,3 +20,8 @@ export type RelativityRateType = {
   result: string,
   value: number,
 };
+
+export type RangeType = {
+  label: string,
+  capitalisationRate: number,
+};

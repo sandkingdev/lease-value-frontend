@@ -8,7 +8,7 @@ const PremiumCalculation = () => {
         durationYears,
         groundRent,
         longLeaseValueOfTheFlat,
-        capitalisationRate,
+        midRate,
         defermentRate,
     } = useAllContext();
 
@@ -55,7 +55,7 @@ const PremiumCalculation = () => {
                                     futureNumberOfYearsRemaining,
                                     groundRent,
                                     adjustedValue,
-                                    capitalisationRate,
+                                    midRate,
                                     defermentRate,
                                     levels.medium
                                 );
@@ -63,7 +63,7 @@ const PremiumCalculation = () => {
                                     durationYears,
                                     groundRent,
                                     longLeaseValueOfTheFlat,
-                                    capitalisationRate,
+                                    midRate,
                                     defermentRate,
                                     levels.medium
                                 );

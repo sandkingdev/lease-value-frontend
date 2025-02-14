@@ -25,8 +25,8 @@ interface AllContextType {
   setLongLeaseValueOfTheFlat: (longLeaseValueOfTheFlat: number) => void;
   defermentRate: number;
   setDefermentRate: (defermentRate: number) => void;
-  capitalisationRate: number;
-  setCapitalisationRate: (capitalisationRate: number) => void;
+  midRate: number;
+  setMidRate: (midRate: number) => void;
   lowRate: number;
   setLowRate: (lowRate: number) => void;
   highRate: number;
@@ -61,7 +61,7 @@ export const AllContextProvider = ({ children }: Props) => {
   const [groundRent, setGroundRent] = useState<number>(10);
   const [longLeaseValueOfTheFlat, setLongLeaseValueOfTheFlat] = useState<number>(250000);
   const [defermentRate, setDefermentRate] = useState<number>(5);
-  const [capitalisationRate, setCapitalisationRate] = useState<number>(6.5);
+  const [midRate, setMidRate] = useState<number>(6.5);
   const [lowRate, setLowRate] = useState<number>(7);
   const [highRate, setHighRate] = useState<number>(6);
   const [address, setAddress] = useState<string>('');
@@ -95,7 +95,7 @@ export const AllContextProvider = ({ children }: Props) => {
     groundRent,
     longLeaseValueOfTheFlat,
     defermentRate,
-    capitalisationRate,
+    midRate,
     lowRate,
     highRate,
     address,
@@ -130,8 +130,8 @@ export const AllContextProvider = ({ children }: Props) => {
         setLongLeaseValueOfTheFlat,
         defermentRate,
         setDefermentRate,
-        capitalisationRate,
-        setCapitalisationRate,
+        midRate,
+        setMidRate,
         lowRate,
         setLowRate,
         highRate,

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AllContext";
 
-const MarriageValue = () => {
+const MarriageValue = ({
+    capitalisationRate
+}: {
+    capitalisationRate: number
+}) => {
     const {
-        capitalisationRate,
         durationYears,
         defermentRate,
         longLeaseValueOfTheFlat,

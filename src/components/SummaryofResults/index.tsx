@@ -6,7 +6,7 @@ const SummaryofResults = () => {
         durationYears,
         groundRent,
         longLeaseValueOfTheFlat,
-        capitalisationRate,
+        midRate,
         defermentRate,
     } = useAllContext();
 
@@ -27,7 +27,7 @@ const SummaryofResults = () => {
                             durationYears,
                             groundRent,
                             longLeaseValueOfTheFlat,
-                            capitalisationRate,
+                            midRate,
                             defermentRate,
                             levels.medium
                         ))))
@@ -40,7 +40,7 @@ const SummaryofResults = () => {
                             durationYears,
                             groundRent,
                             longLeaseValueOfTheFlat,
-                            capitalisationRate,
+                            midRate,
                             defermentRate,
                             levels.low
                         ))))
@@ -53,7 +53,7 @@ const SummaryofResults = () => {
                             durationYears,
                             groundRent,
                             longLeaseValueOfTheFlat,
-                            capitalisationRate,
+                            midRate,
                             defermentRate,
                             levels.high
                         ))))
