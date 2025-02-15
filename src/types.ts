@@ -25,3 +25,23 @@ export type RangeType = {
   label: string,
   capitalisationRate: number,
 };
+
+export type ChartDataType = {
+  data: {
+    yearsLeft: number;
+    premium: number;
+  }[];
+  color: string;
+  label: string;
+};
+
+export type HighlightPointType = {
+  yearsLeft: number;
+  premium: number;
+};
+
+export type BarChartLegendType = {
+  label: string,
+  value: number,
+  color: string,
+}

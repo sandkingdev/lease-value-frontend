@@ -1,4 +1,4 @@
-import { FeaturesOptionType, FloorLevelOptionType, PremiumType } from "./types";
+import { BarChartLegendType, ChartDataType, FeaturesOptionType, FloorLevelOptionType, HighlightPointType, PremiumType } from "./types";
 
 if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
   alert("VITE_SUPABASE_ANON_KEY is required");
@@ -212,3 +212,252 @@ export const getRelativityRate = async (durationInYears: number) => {
     };
   }
 };
+
+export const generatePremiumData = (groundRent: number, longLeaseValueOfTheFlat: number, yieldRate: number, defermentRate: number, level: number, xMin: number, xMax: number) => {
+  const data = [];
+  for (let years = xMin; years <= xMax; years++) {
+    const premium = calculatePremium(years, groundRent, longLeaseValueOfTheFlat, yieldRate, defermentRate, level);
+    data.push({
+      yearsLeft: years,
+      premium: getPremiumValue(premium),
+    });
+  }
+  return data;
+}
+
+// Draw the main premium chart
+export const drawPremiumChart = (dataSets: ChartDataType[], highlightPoint: HighlightPointType, xMin: number, xMax: number) => {
+  // @ts-ignore
+  const d3 = window.d3;
+  d3.select("#chart").html("");
+
+  const margin = {
+    top: 20,
+    right: 30,
+    bottom: 50,
+    left: 100
+  },
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // Max premium
+  const maxPremium = d3.max(dataSets, (ds: any) => d3.max(ds.data, (d: any) => d.premium));
+  const x = d3.scaleLinear().domain([xMax, xMin]).range([0, width]);
+  const y = d3.scaleLinear().domain([0, maxPremium * 1.1]).nice().range([height, 0]);
+
+  // X-axis
+  svg.append("g")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(x).ticks(5))
+    .append("text")
+    .attr("x", width / 2)
+    .attr("y", 40)
+    .attr("fill", "#000")
+    .style("font-size", "17px")
+    .style("text-anchor", "middle")
+    .text("Years Left on Lease");
+
+  // Y-axis
+  svg.append("g")
+    .call(d3.axisLeft(y).ticks(10))
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height / 2)
+    .attr("y", -80)
+    .attr("fill", "#000")
+    .style("font-size", "18px")
+    .style("text-anchor", "middle")
+    .text("Premium Payable (£)");
+
+  // Lines
+  const lineGenerator = d3.line()
+    .curve(d3.curveMonotoneX)
+    .x((d: any) => x(d.yearsLeft))
+    .y((d: any) => y(d.premium));
+
+  dataSets.forEach((ds: any) => {
+    svg.append("path")
+      .datum(ds.data)
+      .attr("fill", "none")
+      .attr("stroke", ds.color)
+      .attr("stroke-width", 2)
+      .attr("d", lineGenerator);
+  });
+
+  // Legend
+  const legend = svg.selectAll('.legend')
+    .data(dataSets)
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', (_: any, i: number) => `translate(10,${i * 20 + 10})`);
+
+  legend.append('rect')
+    .attr('x', 0)
+    .attr('y', 4)
+    .attr('width', 18)
+    .attr('height', 18)
+    .style('fill', (d: any) => d.color);
+
+  legend.append('text')
+    .attr('x', 24)
+    .attr('y', 13)
+    .attr('dy', '.35em')
+    .style('text-anchor', 'start')
+    .style('font-size', '12px')
+    .text((d: any) => d.label);
+
+  // Interactivity
+  const focus = svg.append('g').style('display', 'none');
+  focus.append('circle').attr('r', 5).attr('fill', 'black');
+  focus.append('text').attr('x', 9).attr('dy', '.35em');
+
+  const originalData = dataSets.find((ds: any) => ds.label === 'Medium Premium')!.data;
+  svg.append('rect')
+    .attr('class', 'overlay')
+    .attr('width', width)
+    .attr('height', height)
+    .style('fill', 'none')
+    .style('pointer-events', 'all')
+    .on('mouseover', () => focus.style('display', null))
+    .on('mouseout', () => focus.style('display', 'none'))
+    .on('mousemove', mousemove);
+
+  function mousemove(event: MouseEvent) {
+    const bisect = d3.bisector((d: any) => d.yearsLeft).left;
+    const mouseX = d3.pointer(event)[0];
+    const x0 = x.invert(mouseX);
+    const i = bisect(originalData, x0, 1);
+    const d0 = originalData[i - 1];
+    const d1 = originalData[i];
+    let d;
+    if (!d1) {
+      d = d0;
+    } else {
+      d = x0 - d0.yearsLeft > d1.yearsLeft - x0 ? d1 : d0;
+    }
+    focus.attr('transform', `translate(${x(d.yearsLeft)},${y(d.premium)})`);
+    focus.select('text')
+      .text(`(${d.yearsLeft.toFixed(1)}, £${(d.premium.toFixed(0))})`)
+      .attr('x', 9)
+      .attr('y', -10)
+      .style('font-size', '12px');
+  }
+
+  // Highlight the user's point in red
+  if (highlightPoint) {
+    svg.append("circle")
+      .attr("cx", x(highlightPoint.yearsLeft))
+      .attr("cy", y(highlightPoint.premium))
+      .attr("r", 5)
+      .attr("fill", "red");
+
+    svg.append("text")
+      .attr("x", x(highlightPoint.yearsLeft) + 10)
+      .attr("y", y(highlightPoint.premium) - 10)
+      .text(`(${highlightPoint.yearsLeft.toFixed(1)} yrs, £${(highlightPoint.premium.toFixed(0))})`)
+      .attr("fill", "black")
+      .style("font-size", "16px");
+  }
+}
+
+export const drawPremiumBarChart = (lostRent: number, landlordValue: number, marriageValue: number) => {
+  // @ts-ignore
+  const d3 = window.d3;
+  d3.select("#premium-bar-chart").html("");
+
+  const data = [{
+    label: "Ground Rent Compensation",
+    value: lostRent,
+    color: "#ccf2ff"
+  },
+  {
+    label: "Property Value Componentx",
+    value: landlordValue,
+    color: "#1ac6ff"
+  },
+  {
+    label: "Marriage Value",
+    value: marriageValue,
+    color: "#0099cc"
+  }
+  ];
+
+  const margin = {
+    top: 20,
+    right: 120,
+    bottom: 40,
+    left: 200
+  };
+  const width = 700;
+  const height = 200;
+
+  const svg = d3.select("#premium-bar-chart")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMinYMin meet");
+
+  // Scales - note x and y are swapped for horizontal bars
+  const x = d3.scaleLinear()
+    .domain([0, d3.max(data, (d: BarChartLegendType) => d.value)])
+    .range([0, width - margin.left - margin.right]);
+
+  const y = d3.scaleBand()
+    .domain(data.map(d => d.label))
+    .range([margin.top, height - margin.bottom])
+    .padding(0.3);
+
+  // Add the horizontal bars
+  svg.selectAll(".bar")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", margin.left)
+    .attr("y", (d: any) => y(d.label))
+    .attr("width", (d: any) => x(d.value))
+    .attr("height", y.bandwidth())
+    .attr("fill", (d: any) => d.color);
+
+  // Add X axis
+  svg.append("g")
+    .attr("transform", `translate(${margin.left},${height - margin.bottom})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat((d: any) => `£${(d)}`));
+
+  // Add Y axis
+  svg.append("g")
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y));
+
+  // Labels
+  svg.selectAll(".label")
+    .data(data)
+    .enter()
+    .append("text")
+    .filter((d: any) => d.value !== 0)
+    .attr("x", (d: any) => margin.left + x(d.value) + 5)
+    .attr("y", (d: any) => y(d.label) + y.bandwidth() / 2 + 4)
+    .style("font-size", "11px")
+    .text((d: any) => `£${(d.value.toFixed(0))}`);
+
+  // Legend
+  const legend = d3.select("#chart-legend").html("");
+  data.forEach(d => {
+    legend.append("div")
+      .style("display", "flex")
+      .style("align-items", "center")
+      .style("gap", "5px")
+      .html(`
+      <div style="width: 15px; height: 15px; background-color: ${d.color};"></div>
+      <span>${d.label}</span>
+    `);
+  });
+}

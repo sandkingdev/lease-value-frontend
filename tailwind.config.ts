@@ -12,6 +12,7 @@ const config: Config = {
         'custom-color-1': '#BF6900',
         'custom-color-2': '#40E0D0',
         'custom-color-3': '#C10000',
+        'custom-border-color': '#4a4a4a',
       },
     }
   },

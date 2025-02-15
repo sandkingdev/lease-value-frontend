@@ -102,7 +102,7 @@ const InputComponent = () => {
                         <div className="">
                             <div className="w-64">
                                 <select
-                                    className="border p-2 rounded-md flex rounded-lg border text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0 bg-custom-dark-1"
+                                    className="border p-2 rounded-md flex rounded-lg border text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0 border-custom-border-color"
                                     value={selectedFloorLevelOption}
                                     onChange={handleFloorLevel}
                                 >
@@ -125,7 +125,7 @@ const InputComponent = () => {
                         <div className="">
                             <div className="w-64">
                                 <select
-                                    className="border p-2 rounded-md flex rounded-lg border text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0 bg-custom-dark-1"
+                                    className="border p-2 rounded-md flex rounded-lg border text-sm font-semibold h-9 px-2.5 cursor-pointer placeholder-custom-white-5 focus:shadow-[rgba(16,24,40,0.05)] focus-visible:outline-0 focus:outline-0 border-custom-border-color"
                                     value={selectedFeaturesOption}
                                     onChange={handleFeatures}
                                 >

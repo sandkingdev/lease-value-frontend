@@ -5,6 +5,7 @@ import SummaryofResults from "../components/SummaryofResults";
 import PropertyParticulars from "../components/PropertyParticulars";
 import PremiumCalculation from "../components/PremiumCalculation";
 import Calculations from "../components/Calculations";
+import PremiumChart from "../components/PremiumChart";
 
 const ReportPage = () => {
   return (
@@ -22,6 +23,8 @@ const ReportPage = () => {
         <SummaryofResults />
 
         <PropertyParticulars />
+
+        <PremiumChart />
 
         <PremiumCalculation />
 
