@@ -6,6 +6,7 @@ import PropertyParticulars from "../components/PropertyParticulars";
 import PremiumCalculation from "../components/PremiumCalculation";
 import Calculations from "../components/Calculations";
 import PremiumChart from "../components/PremiumChart";
+import DBComponent from "../components/DBComponent";
 
 const ReportPage = () => {
   return (
@@ -15,6 +16,8 @@ const ReportPage = () => {
       </Link>
       <div className="main-container gap-y-5 p-4 lg:p-8">
         <h1 className="header-text text-3xl md:text-4xl">This is a Report Page</h1>
+
+        <DBComponent />
 
         <InputComponent />
 

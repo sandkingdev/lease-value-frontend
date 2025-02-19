@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { calculatePremium, getPremiumValue, levels, premiumCalculationYears } from "../../config";
 import { useAllContext } from "../../context/AllContext";
 
 const PremiumCalculation = () => {
-    const [propertyInflationRate, setPropertyInflationRate] = useState<number>(6);
     const {
         durationYears,
         groundRent,
         longLeaseValueOfTheFlat,
         midRate,
         defermentRate,
+        propertyInflationRate,
+        setPropertyInflationRate,
     } = useAllContext();
 
     return (

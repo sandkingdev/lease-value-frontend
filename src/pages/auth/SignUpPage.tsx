@@ -32,6 +32,7 @@ const SignUpPage = () => {
     if (error) {
       alert(error.message);
     }
+
     setStatus("");
   };
 

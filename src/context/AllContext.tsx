@@ -33,6 +33,8 @@ interface AllContextType {
   setHighRate: (highRate: number) => void;
   address: string,
   setAddress: (address: string) => void,
+  propertyInflationRate: number,
+  setPropertyInflationRate: (propertyInflationRate: number) => void;
 }
 
 const AllContext = createContext<AllContextType | null>(null);
@@ -65,6 +67,7 @@ export const AllContextProvider = ({ children }: Props) => {
   const [lowRate, setLowRate] = useState<number>(7);
   const [highRate, setHighRate] = useState<number>(6);
   const [address, setAddress] = useState<string>('');
+  const [propertyInflationRate, setPropertyInflationRate] = useState<number>(6);
   const [relativityRate, setRelativityRate] = useState<RelativityRateType>({
     status: false,
     result: "Not applicable / No marriage value",
@@ -138,6 +141,8 @@ export const AllContextProvider = ({ children }: Props) => {
         setHighRate,
         address,
         setAddress,
+        propertyInflationRate,
+        setPropertyInflationRate,
       }}
     >
       {isLoading ? <LoadingPage /> : children}
