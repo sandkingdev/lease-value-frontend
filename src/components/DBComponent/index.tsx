@@ -33,7 +33,6 @@ const DBComponent = () => {
         setPropertyInflationRate,
     } = useAllContext();
     const [user, setUser] = useState(null);
-    const [userData, setUserData] = useState(null);
 
     // Get user session on mount
     useEffect(() => {
@@ -46,6 +45,9 @@ const DBComponent = () => {
             }
             // @ts-ignore
             setUser(data.user); // Save user info
+            if (data.user) {
+                await getUserData(data.user.id);
+            }
         };
         fetchUser();
     }, []);
@@ -86,17 +88,11 @@ const DBComponent = () => {
         console.log("User profile updated:", data);
     };
 
-    const handleLoad = async () => {
-        if (!user) {
-            console.error("No user logged in!");
-            return;
-        }
-
-        // Fetch user data from `profiles`
+    const getUserData = async (userId: string) => {
         const { data, error } = await supabase
             .from("profiles")
             .select("*") // Select all columns
-            .eq("id", (user as any).id) // Match logged-in user's ID
+            .eq("id", userId) // Match logged-in user's ID
             .single(); // Expect only one result
 
         if (error) {
@@ -117,15 +113,11 @@ const DBComponent = () => {
         setHighRate(data.high_rate);
         setAddress(data.address);
         setPropertyInflationRate(data.property_inflation_rate);
-
-        toast.success('Successfull loaded');
-        setUserData(data); // Save data in state
     }
 
     return (
-        <div className="flex gap-x-10">
+        <div className="flex w-full justify-end">
             <div className="bg-light-green px-5 py-1 border border-1 rounded-lg" onClick={handleSave}>Save</div>
-            <div className="bg-light-green px-5 py-1 border border-1 rounded-lg" onClick={handleLoad}>Load</div>
         </div>
     )
 };
