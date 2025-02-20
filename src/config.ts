@@ -41,6 +41,16 @@ export const featuresOptions: FeaturesOptionType[] = [
 
 export const extensionYears = 90;
 
+export const modalTitles = {
+  save: 'Save',
+  load: 'Load',
+}
+
+// supabase database
+export const reportsTableName = 'reports';
+export const reportsTableTitleColumn = 'title';
+export const reportsTableUserIdColumn = 'user_id';
+
 export const getRemainingYears = (startDate: Date, endDate: Date) => {
   try {
     if (endDate <= startDate) {
