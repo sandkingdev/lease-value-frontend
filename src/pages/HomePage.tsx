@@ -21,7 +21,8 @@ const HomePage = () => {
         ) : (
           <Link to="/auth/sign-in">Sign In</Link>
         )}
-        <Link to="/report">Report Page</Link>
+        <Link to="/report-template">Report Template</Link>
+        <Link to="/report-list">Report List</Link>
       </section>
     </main>
   );

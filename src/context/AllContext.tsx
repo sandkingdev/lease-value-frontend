@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../supabase";
 import LoadingPage from "../pages/LoadingPage";
 import { Session } from "@supabase/supabase-js";
-import { getRelativityRate, getRemainingYears } from "../config";
+import { defaultValueOfTemplate, getRelativityRate, getRemainingYears } from "../config";
 import { RelativityRateType } from "../types";
 
 interface AllContextType {
@@ -54,20 +54,20 @@ export const AllContextProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   // state variables
-  const [leaseEndDate, setLeaseEndDate] = useState<Date>(new Date("2108-12-24T20:00:00"));
-  const [valuationDate, setValuationDate] = useState<Date>(new Date("2033-03-01T20:00:00"));
+  const [leaseEndDate, setLeaseEndDate] = useState<Date>(defaultValueOfTemplate.leaseEndDate);
+  const [valuationDate, setValuationDate] = useState<Date>(defaultValueOfTemplate.valuationDate);
   const [durationYears, setDurationYears] = useState<number>(getRemainingYears(valuationDate, leaseEndDate));
-  const [numberOfBedrooms, setNumberOfBedrooms] = useState<number>(2);
-  const [selectedFloorLevelOption, setSelectedFloorLevelOption] = useState("basement");
-  const [selectedFeaturesOption, setSelectedFeaturesOption] = useState("no garden");
-  const [groundRent, setGroundRent] = useState<number>(10);
-  const [longLeaseValueOfTheFlat, setLongLeaseValueOfTheFlat] = useState<number>(250000);
-  const [defermentRate, setDefermentRate] = useState<number>(5);
-  const [midRate, setMidRate] = useState<number>(6.5);
-  const [lowRate, setLowRate] = useState<number>(7);
-  const [highRate, setHighRate] = useState<number>(6);
-  const [address, setAddress] = useState<string>('');
-  const [propertyInflationRate, setPropertyInflationRate] = useState<number>(6);
+  const [numberOfBedrooms, setNumberOfBedrooms] = useState<number>(defaultValueOfTemplate.numberOfBedrooms);
+  const [selectedFloorLevelOption, setSelectedFloorLevelOption] = useState(defaultValueOfTemplate.selectedFloorLevelOption);
+  const [selectedFeaturesOption, setSelectedFeaturesOption] = useState(defaultValueOfTemplate.selectedFeaturesOption);
+  const [groundRent, setGroundRent] = useState<number>(defaultValueOfTemplate.groundRent);
+  const [longLeaseValueOfTheFlat, setLongLeaseValueOfTheFlat] = useState<number>(defaultValueOfTemplate.longLeaseValueOfTheFlat);
+  const [defermentRate, setDefermentRate] = useState<number>(defaultValueOfTemplate.defermentRate);
+  const [midRate, setMidRate] = useState<number>(defaultValueOfTemplate.midRate);
+  const [lowRate, setLowRate] = useState<number>(defaultValueOfTemplate.lowRate);
+  const [highRate, setHighRate] = useState<number>(defaultValueOfTemplate.highRate);
+  const [address, setAddress] = useState<string>(defaultValueOfTemplate.address);
+  const [propertyInflationRate, setPropertyInflationRate] = useState<number>(defaultValueOfTemplate.propertyInflationRate);
   const [relativityRate, setRelativityRate] = useState<RelativityRateType>({
     status: false,
     result: "Not applicable / No marriage value",

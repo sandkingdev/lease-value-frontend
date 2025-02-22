@@ -1,3 +1,4 @@
+import supabase from "./supabase";
 import { BarChartLegendType, ChartDataType, FeaturesOptionType, FloorLevelOptionType, HighlightPointType, PremiumType } from "./types";
 
 if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
@@ -43,13 +44,28 @@ export const extensionYears = 90;
 
 export const modalTitles = {
   save: 'Save',
-  load: 'Load',
 }
 
 // supabase database
 export const reportsTableName = 'reports';
 export const reportsTableTitleColumn = 'title';
 export const reportsTableUserIdColumn = 'user_id';
+
+export const defaultValueOfTemplate = {
+  leaseEndDate: new Date("2108-12-24T20:00:00"),
+  valuationDate: new Date("2033-03-01T20:00:00"),
+  numberOfBedrooms: 2,
+  selectedFloorLevelOption: "basement",
+  selectedFeaturesOption: "no garden",
+  groundRent: 10,
+  longLeaseValueOfTheFlat: 250000,
+  defermentRate: 5,
+  midRate: 6.5,
+  lowRate: 7,
+  highRate: 6,
+  address: '',
+  propertyInflationRate: 6,
+}
 
 export const getRemainingYears = (startDate: Date, endDate: Date) => {
   try {
@@ -470,4 +486,20 @@ export const drawPremiumBarChart = (lostRent: number, landlordValue: number, mar
       <span>${d.label}</span>
     `);
   });
+}
+
+export const getReportTitlesOfUser = async (userId: string) => {
+  const { data, error } = await supabase
+    .from(reportsTableName)
+    .select(reportsTableTitleColumn) // Select all columns
+    .eq(reportsTableUserIdColumn, userId);
+
+  if (error) {
+    console.error("Error loading profile:", error.message);
+    return;
+  }
+
+  console.log("data: ====  ", data);
+  //@ts-ignore
+  return data.map((item: { title: string }) => item.title);
 }
