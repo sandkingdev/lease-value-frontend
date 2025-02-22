@@ -176,7 +176,7 @@ export const CustomModalMainComponent = ({
         <div className='text-2xl'>
           Report list
         </div>
-        <div className='bg-white/30 flex flex-col gap-y-2 overflow-y-auto h-20'>
+        <div className={`bg-white/30 flex flex-col gap-y-2 overflow-y-auto ${buttonLabel == modalTitles.save ? 'h-20' : 'h-max'}`}>
           {reportTitleList.map((item: string, index: number) => (
             <div key={index} className={`py-0.5 px-1 cursor-pointer ${selectedReportTitle == item && 'bg-black/10'}`} onClick={() => setSelectedReportTitle(item)}>
               {item}
